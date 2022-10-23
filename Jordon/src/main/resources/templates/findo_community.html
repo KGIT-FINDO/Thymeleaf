@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="/include/header :: headfragment">
+</head>
+<body>
+<div class="wrapper_findo">
+    <div class="total_findo">
+        <div th:replace="/include/header :: headerfragment"></div>
+        <!-- board_list -->
+
+        <a th:href="@{/community_board_content}">글내용</a> <br><br>
+
+        <a th:href="@{/community_board_write}">글쓰기</a>
+
+        <!-- board_list -->
+        <div th:replace="/include/footer :: footerfragment"></div>
+    </div>
+</div>
+</body>
+</html>
