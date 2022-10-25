@@ -44,6 +44,7 @@ public class PortfolioController {
             String num = plist.get(i).getPortfolionumber();//종목코드
             String quantity = plist.get(i).getPortfolioquantity();//보유수량
             String tprice = plist.get(i).getTransactionprice();//매수금액
+            String avgprice = plist.get(i).getAvgprice();//평균단가
 
             //getStock()메서드를 이용해서 detail key값을 가져와서 지정함.
             JSONObject object = StockInfo.getStock(num);
@@ -55,22 +56,24 @@ public class PortfolioController {
                 //평균단가
                 int avgPrice = (Integer.parseInt(quantity)*Integer.parseInt(tprice));
 
+                //손익
+                Long profitAndLoss;
+                profitAndLoss = (cprice - Integer.parseInt(tprice))*Integer.parseInt(quantity);
+                System.out.println(profitAndLoss);
+
 
                 //수익률 = (현재주식가격 - 구매가격)/구매가격*100
-                Long earningsrate;
-                earningsrate = (cprice - Integer.parseInt(tprice))/Integer.parseInt(tprice);//*100;
-
-            System.out.println("cprice : "+cprice);
-            System.out.println("tprice : "+tprice);
-            System.out.println("eprice : "+earningsrate);
-            System.out.println("avgP : "+avgPrice);
+                double earningsrate;
+                earningsrate = (double) (cprice - Integer.parseInt(tprice))/Integer.parseInt(tprice)*100;
+                double eprice = Math.round(earningsrate*100)/100.0;
 
 
-
-
-            //JSON에 db에서 불러온 모유수량과 매수금액, 평균단가 저장
+            //JSON에 db에서 불러온 모유수량과 매수금액, 손익, 수익률,평균단가 저장
             objectdetail.put("quantity", quantity);
             objectdetail.put("tprice", tprice);
+            objectdetail.put("profitAndLoss", profitAndLoss);
+            objectdetail.put("eprice",eprice+"%");
+            objectdetail.put("avgprice",avgPrice);
             klist.add(objectdetail);
         }
         listM.addAttribute("plist", plist);
