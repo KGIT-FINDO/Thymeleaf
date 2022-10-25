@@ -30,7 +30,6 @@ public class MemberController {
     }
 
 
-
     @RequestMapping("/findo_signup_form_ok")
     public String findo_signup_form_ok(MemberVO m) {
         if(m.getMemberid() != null && m.getMemberpassword() != null && m.getMemberpassword2() != null && m.getMembername() !=null && m.getMemberbirth() != null && m.getMembergender() != null && m.getMemberemail() != null && m.getMemberemailauth() != null && m.getMemberaddress1() != null && m.getMemberaddress2() != null && m.getMemberaddress3() != null && m.getMemberaddress4() != null && m.getMemberphonenumber() != null) {

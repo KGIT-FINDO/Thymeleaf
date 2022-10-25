@@ -6,9 +6,36 @@
 <div class="wrapper_findo">
     <div class="total_findo">
         <div th:replace="/include/header :: headerfragment"></div>
-        <div>
-            <p>포트폴리오 회원정보에 따른 금융정보 가져오기<p>
-        </div>
+    <div class="search-list" align="center">
+        <table>
+            <tr style="text-align: center;">
+                <th width="50%" height="26">종목명</th>
+                <th width="50%">종목코드</th>
+            </tr>
+            <div th:if="${plist != null}">
+                <tr th:each="p : ${plist}">
+
+                    <td align="center">
+                        <span th:text="${p.portfolionumber}"></span>
+                    </td>
+
+                    <td style="text-align: center;">
+                        <a th:href="@{/port_cont(portfolionumber=${p.portfolionumber})}"
+                           style="text-decoration: none; color:black;">
+                            <span th:text="${p.portfolioname}"></span>
+                        </a>
+                    </td>
+                </tr>
+            </div>
+
+            <div th:if="${plist == null}">
+                <tr>
+                    <th colspan="5">검색한 종목이 없습니다.</th>
+                </tr>
+            </div>
+        </table>
+    </div>
+
         <div th:replace="/include/footer :: footerfragment"></div>
     </div>
 </div>

@@ -17,12 +17,6 @@ public class MainController {
         return "findo";
     }
 
-    @RequestMapping("/portfolio")
-    public String findo_portfolio(Model model) {
-        model.addAttribute("session", "session");
-        model.addAttribute("memberid", "memberid 님 반갑습니다.");
-        return "findo_portfolio";
-    }
 
     @RequestMapping("/community")
     public String findo_community(Model model) {
