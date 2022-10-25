@@ -9,4 +9,6 @@ public class PortfolioVO {
     private String portfolionumber;
     private String portfolioname;
     private String portfolioquantity;
+    private String transactiondate;
+    private String transactionprice;
 }

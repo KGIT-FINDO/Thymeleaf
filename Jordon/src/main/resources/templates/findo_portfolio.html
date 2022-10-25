@@ -9,26 +9,42 @@
     <div class="search-list" align="center">
         <table>
             <tr style="text-align: center;">
-                <th width="50%" height="26">종목명</th>
-                <th width="50%">종목코드</th>
+                <th>종목코드</th>
+                <th>종목명</th>
+                <th>보유수량</th>
+                <th>매수금액</th>
+                <th>현재가</th>
+                <th>손익</th>
+                <th>수익률</th>
+                <th>평균단가</th>
             </tr>
-            <div th:if="${plist != null}">
-                <tr th:each="p : ${plist}">
+            <div th:if="${klist != null}">
+                <tr th:each="k : ${klist}">
 
                     <td align="center">
-                        <span th:text="${p.portfolionumber}"></span>
+                        <span th:text="${k.id}"></span>
                     </td>
 
                     <td style="text-align: center;">
-                        <a th:href="@{/port_cont(portfolionumber=${p.portfolionumber})}"
+                        <a th:href="@{/port_cont(portfolionumber=${k.id})}"
                            style="text-decoration: none; color:black;">
-                            <span th:text="${p.portfolioname}"></span>
+                            <span th:text="${k.name}"></span>
                         </a>
                     </td>
+                    <td>
+                        <span th:text="${k.quantity}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${k.tprice}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${k.currentPrice}"></span>
+                    </td>
                 </tr>
+
             </div>
 
-            <div th:if="${plist == null}">
+            <div th:if="${klist == null}">
                 <tr>
                     <th colspan="5">검색한 종목이 없습니다.</th>
                 </tr>
