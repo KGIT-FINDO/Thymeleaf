@@ -116,4 +116,16 @@ public class PortfolioController {
         return slist;
 
     }
+    @RequestMapping("port_add")
+    public String addPortfolio(PortfolioVO pvo, HttpSession session){
+        String userID = (String) session.getAttribute("session");
+        pvo.setMemberid(userID);
+        PortfolioVO isStockExist = this.portfolioService.checkPortfolio(pvo);
+        if(isStockExist == null){
+            this.portfolioService.addPortfolio(pvo);
+        }else{
+            //이미 내 포트폴리오에
+        }
+        return "redirect:http://localhost:7777/portfolio";
+    }
 }

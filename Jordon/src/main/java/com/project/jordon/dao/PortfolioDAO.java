@@ -9,4 +9,8 @@ public interface PortfolioDAO {
     List<PortfolioVO> getPortfolioList(PortfolioVO pvo);
 
     List<SearchVO> getSearchList(SearchVO svo);
+
+    PortfolioVO checkPortfolio(PortfolioVO pvo);
+
+    void addPortfolio(PortfolioVO pvo);
 }

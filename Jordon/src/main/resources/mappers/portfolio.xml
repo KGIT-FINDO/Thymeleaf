@@ -11,4 +11,12 @@
     <select id="portSearchList" resultType="com.project.jordon.vo.SearchVO">
         select * from kospi where stockname like #{find_name} or stocknumber like #{find_name}
     </select>
+    <select id="checkStockExist" resultType="com.project.jordon.vo.PortfolioVO">
+        select * from portfolio where portfolionumber=#{stock_number}
+    </select>
+
+    <insert id="insertPortfolio">
+        insert into portfolio(portfolioid,memberid,portfolionumber,portfolioname,portfolioquantity,avgprice,transactiondate,transactionprice)
+        values (portfolio_seq.nextval,#{memberid},#{stock_number},#{stock_name},#{quantity},#{price},#{date},#{price})
+    </insert>
 </mapper>

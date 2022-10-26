@@ -21,4 +21,14 @@ public class PortfolioDAOImpl implements PortfolioDAO{
     public List<SearchVO> getSearchList(SearchVO svo) {
         return sqlSession.selectList("portSearchList", svo);
     }
+
+    @Override
+    public PortfolioVO checkPortfolio(PortfolioVO pvo) {
+        return sqlSession.selectOne("checkStockExist", pvo);
+    }
+
+    @Override
+    public void addPortfolio(PortfolioVO pvo) {
+        this.sqlSession.insert("insertPortfolio", pvo);
+    }
 }

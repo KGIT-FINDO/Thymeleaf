@@ -10,6 +10,8 @@
         <div>
             <script src="/js/jquery.js"></script>
             <script>
+                /*<![CDATA[*/
+
                 function getSearchList(){
                     $.ajax({
                         type: 'GET',
@@ -21,20 +23,25 @@
                             if(result.length>=1){
                                 result.forEach(function(item){
                                     str='<tr>'
-                                    str += "<td>"+item.stockname+"</td>";
-                                    str+="<td>"+item.stocknumber+"</td>";
+                                    str += "<td><a id='"+item.stocknumber+"' name='"+item.stockname+"' href='#' onclick='statusChange(this)'>" + item.stocknumber + "</a></td>";
+                                    str += "<td><a id='"+item.stockname+"'  name='"+item.stocknumber+"'href='#' onclick='statusChange2(this)'>" + item.stockname + "</a></td>";
                                     str+="</tr>"
                                     $('#stock_list').append(str);
                                 })
+                            }else {
+                                str='검색결과가 없습니다.'
+                                $('#stock_list').append(str);
                             }
                         }
                     })
                 }
+
+                /*]]>*/
             </script>
             <form name="search-form">
                 <div class="input-area">
                     <input type="text" class="input-box" id="find_name" name="find_name" maxlength="20"
-                           placeholder="종목추가"/>
+                           placeholder="종목번호 / 코드 입력"/>
                     <intput type="button" onclick="getSearchList()"><i class="fa-solid fa-magnifying-glass search-icon"></i></intput>
                 </div>
             </form>
@@ -43,33 +50,50 @@
                 <table>
 
                     <tbody id="stock_list">
-                        <span th:text="${slist}"></span>
+
                     </tbody>
-                    <div th:if="${slist != null}">
-                        <tr style="text-align: center;">
-                            <th width="50%" height="26">종목명</th>
-                            <th width="50%">종목코드</th>
-                        </tr>
-                        <tr th:each="s : ${slist}">
+                    <script>
+                        //종목번호, 이름 입력칸에 검색창에서 찾은 종목번호나 이름을 클릭하면 자동으로 입력되게 만든 함수.
+                        /*<![CDATA[*/
+                        //종목 번호와 종목이름의 <a>태그 내의 아이디와 네임이 서로 반대로 적혀있어서 부득이하게 함수 두개로 만듬.
+                        function statusChange(val) {
 
-                            <td align="center">
-                                <span th:text="${s.stocknumber}"></span>
-                            </td>
+                            var strText = $(val).text();
+                            var strText2 = val.name;
+                            console.log("val.id : "+val.id);
+                            console.log("val.name "+val.name);
+                            console.log("statusChange1 실행중");
 
-                            <td style="text-align: center;">
-                                <a th:href="@{/stock_cont(stocknumber=${s.stocknumber})}"
-                                   style="text-decoration: none; color:black;">
-                                    <span th:text="${s.stockname}"></span>
-                                </a>
-                            </td>
-                        </tr>
+
+                            // strText 에 전체 문자열이 입력된다.
+                            $("#stock_number").val(strText);
+                            $("#stock_name").val(strText2);
+                        }
+                        function statusChange2(val) {
+
+                            var strText = $(val).text();
+                            var strText2 = val.name;
+                            console.log("val.id : "+val.id);
+                            console.log("val.name "+val.name);
+                            console.log("statusChange2 실행중");
+
+
+                            // strText 에 전체 문자열이 입력된다.
+                            $("#stock_number").val(strText2);
+                            $("#stock_name").val(strText);
+                        }
+                        /*]]>*/
+                    </script>
+                    <form action="/port_add">
+                    <div id="port_cont" name="port_cont">
+                        <input type="text" id="stock_number" name="stock_number" placeholder="종목번호">
+                        <input type="text" id="stock_name" name="stock_name" placeholder="종목명">
+                        <input type="date" id="date" name="date" placeholder="구매날짜">
+                        <input type="text" id="quantity" name="quantity" placeholder="구매수량">
+                        <input type="text" id="price" name="price" placeholder="구매가격">
+                        <button type="submit">내 포트폴리오에 추가</button>
                     </div>
-
-                    <div th:if="${slist == null}">
-                        <tr>
-                            <th colspan="5">검색한 종목이 없습니다.</th>
-                        </tr>
-                    </div>
+                    </form>
                 </table>
             </div>
         </div>

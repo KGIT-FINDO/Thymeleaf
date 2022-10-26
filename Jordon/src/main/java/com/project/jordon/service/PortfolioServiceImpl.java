@@ -21,4 +21,14 @@ public class PortfolioServiceImpl implements PortfolioService{
     public List<SearchVO> getSearchList(SearchVO svo) {
         return this.portfolioDAO.getSearchList(svo);
     }
+
+    @Override
+    public PortfolioVO checkPortfolio(PortfolioVO pvo) {
+        return this.portfolioDAO.checkPortfolio(pvo);
+    }
+
+    @Override
+    public void addPortfolio(PortfolioVO pvo) {
+        this.portfolioDAO.addPortfolio(pvo);
+    }
 }
