@@ -7,6 +7,72 @@
     <div class="total_findo">
         <div th:replace="/include/header :: headerfragment"></div>
     <div class="search-list" align="center">
+        <div>
+            <script src="/js/jquery.js"></script>
+            <script>
+                function getSearchList(){
+                    $.ajax({
+                        type: 'GET',
+                        url : "/port_search",
+                        data : $("form[name=search-form]").serialize(),
+                        success : function(result){
+                            //테이블 초기화
+                            $('#stock_list').empty();
+                            if(result.length>=1){
+                                result.forEach(function(item){
+                                    str='<tr>'
+                                    str += "<td>"+item.stockname+"</td>";
+                                    str+="<td>"+item.stocknumber+"</td>";
+                                    str+="</tr>"
+                                    $('#stock_list').append(str);
+                                })
+                            }
+                        }
+                    })
+                }
+            </script>
+            <form name="search-form">
+                <div class="input-area">
+                    <input type="text" class="input-box" id="find_name" name="find_name" maxlength="20"
+                           placeholder="종목추가"/>
+                    <intput type="button" onclick="getSearchList()"><i class="fa-solid fa-magnifying-glass search-icon"></i></intput>
+                </div>
+            </form>
+
+            <div class="search-list" align="center">
+                <table>
+
+                    <tbody id="stock_list">
+                        <span th:text="${slist}"></span>
+                    </tbody>
+                    <div th:if="${slist != null}">
+                        <tr style="text-align: center;">
+                            <th width="50%" height="26">종목명</th>
+                            <th width="50%">종목코드</th>
+                        </tr>
+                        <tr th:each="s : ${slist}">
+
+                            <td align="center">
+                                <span th:text="${s.stocknumber}"></span>
+                            </td>
+
+                            <td style="text-align: center;">
+                                <a th:href="@{/stock_cont(stocknumber=${s.stocknumber})}"
+                                   style="text-decoration: none; color:black;">
+                                    <span th:text="${s.stockname}"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </div>
+
+                    <div th:if="${slist == null}">
+                        <tr>
+                            <th colspan="5">검색한 종목이 없습니다.</th>
+                        </tr>
+                    </div>
+                </table>
+            </div>
+        </div>
         <table>
             <tr style="text-align: center;">
                 <th>종목코드</th>

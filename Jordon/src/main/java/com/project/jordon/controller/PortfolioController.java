@@ -3,6 +3,7 @@ package com.project.jordon.controller;
 import com.project.jordon.service.PortfolioService;
 import com.project.jordon.stock.StockInfo;
 import com.project.jordon.vo.PortfolioVO;
+import com.project.jordon.vo.SearchVO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,5 +102,18 @@ public class PortfolioController {
         cm.setViewName("port_cont");
 
         return cm;
+    }
+    @RequestMapping("/port_search")
+    @ResponseBody
+    private List<SearchVO>port_search(HttpServletRequest request, SearchVO svo) {
+
+        String find_name = request.getParameter("find_name");
+        svo.setFind_name("%"+find_name+"%");
+
+        System.out.println(find_name);
+        List<SearchVO> slist = this.portfolioService.getSearchList(svo);
+        System.out.println("slist : "+slist);
+        return slist;
+
     }
 }

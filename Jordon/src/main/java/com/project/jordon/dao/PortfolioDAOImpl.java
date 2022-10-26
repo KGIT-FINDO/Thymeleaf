@@ -1,6 +1,7 @@
 package com.project.jordon.dao;
 
 import com.project.jordon.vo.PortfolioVO;
+import com.project.jordon.vo.SearchVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,10 @@ public class PortfolioDAOImpl implements PortfolioDAO{
     @Override
     public List<PortfolioVO> getPortfolioList(PortfolioVO pvo) {
         return sqlSession.selectList("portfolioList",pvo);
+    }
+
+    @Override
+    public List<SearchVO> getSearchList(SearchVO svo) {
+        return sqlSession.selectList("portSearchList", svo);
     }
 }
