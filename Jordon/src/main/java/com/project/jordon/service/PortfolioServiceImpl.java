@@ -31,4 +31,9 @@ public class PortfolioServiceImpl implements PortfolioService{
     public void addPortfolio(PortfolioVO pvo) {
         this.portfolioDAO.addPortfolio(pvo);
     }
+
+    @Override
+    public void editAvgPrice(PortfolioVO pvo) {
+        this.portfolioDAO.editAvgPrice(pvo);
+    }
 }

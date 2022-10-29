@@ -31,4 +31,9 @@ public class PortfolioDAOImpl implements PortfolioDAO{
     public void addPortfolio(PortfolioVO pvo) {
         this.sqlSession.insert("insertPortfolio", pvo);
     }
+
+    @Override
+    public void editAvgPrice(PortfolioVO pvo) {
+        this.sqlSession.update("editAvg", pvo);
+    }
 }

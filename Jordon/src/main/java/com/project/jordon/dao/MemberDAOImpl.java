@@ -5,9 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
@@ -23,6 +20,25 @@ public class MemberDAOImpl implements MemberDAO {
         return this.sqlSession.selectOne("member_login", memberid);
     }
 
+    @Override
+    public MemberVO idsearchMember(String memberemail) {
+        return this.sqlSession.selectOne("member_id_search", memberemail);
+    }
+
+    @Override
+    public MemberVO passwordsearchMember(String memberid) {
+        return this.sqlSession.selectOne("member_password_search", memberid);
+    }
+
+    @Override
+    public int updateMember(MemberVO m) {
+        return this.sqlSession.update("member_update", m);
+    }
+
+    @Override
+    public int deleteMember(MemberVO m) {
+        return this.sqlSession.delete("member_delete", m);
+    }
 
 
 }

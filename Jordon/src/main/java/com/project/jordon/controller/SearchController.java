@@ -1,18 +1,16 @@
 package com.project.jordon.controller;
 
-import com.project.jordon.vo.SearchVO;
 import com.project.jordon.service.SearchService;
 import com.project.jordon.stock.StockInfo;
+import com.project.jordon.vo.SearchVO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +31,8 @@ public class SearchController {
 
         System.out.println(find_name);
         List<SearchVO> slist = this.searchService.getSearchList(svo);
+        int slist_check = slist.size();
+        listM.addAttribute("slist_check", slist_check);
         listM.addAttribute("slist", slist);
         listM.addAttribute("find_name", find_name);
         return "search_list";

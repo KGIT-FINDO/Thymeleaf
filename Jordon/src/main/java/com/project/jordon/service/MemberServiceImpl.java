@@ -22,4 +22,24 @@ public class MemberServiceImpl implements MemberService{
         return this.memberDAO.loginMember(memberid);
     }
 
+    @Override
+    public MemberVO idsearchMember(String memberemail) {
+        return this.memberDAO.idsearchMember(memberemail);
+    }
+
+    @Override
+    public MemberVO passwordsearchMember(String memberid) {
+        return this.memberDAO.passwordsearchMember(memberid);
+    }
+
+    @Override
+    public int updateMember(MemberVO m) {
+        return this.memberDAO.updateMember(m);
+    }
+
+    @Override
+    public int deleteMember(MemberVO m) {
+        return this.memberDAO.deleteMember(m);
+    }
+
 }
