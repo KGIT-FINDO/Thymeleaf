@@ -134,8 +134,6 @@
                         <th>평균단가</th>
                     </tr>
                     <form action="/port_del" method="post">
-                            <button type="submit" id="del_port" class="select_edit" style="display: none">삭제하기</button>
-
 
                     <div th:if="${klist != null}">
                         <tr th:each="k : ${klist}">
@@ -169,6 +167,10 @@
                         </tr>
 
                     </div>
+                        <div>
+                            <button type="submit" id="del_port" class="select_edit" style="display: none">삭제하기</button>
+                        </div>
+
                     </form>
 
                     <div th:if="${klist == null}">
