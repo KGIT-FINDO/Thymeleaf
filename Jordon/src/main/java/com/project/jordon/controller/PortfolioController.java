@@ -174,7 +174,10 @@ public class PortfolioController {
         String userID = (String)session.getAttribute("session");
         pvo.setMemberid(userID);
         for (String c : checkedValue) {
-            System.out.println("c : "+c);
+            pvo.setPortfolionumber(c);
+            System.out.println("pvo:"+pvo);
+            this.portfolioService.delPortfolio(pvo);
+
         }
 
 
