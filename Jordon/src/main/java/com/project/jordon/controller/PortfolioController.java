@@ -53,7 +53,7 @@ public class PortfolioController {
             String num = plist.get(i).getPortfolionumber();//종목코드
             int quantity =  Integer.parseInt(plist.get(i).getPortfolioquantity());//보유수량
             int tprice = Integer.parseInt(plist.get(i).getTransactionprice());//매수금액
-            int avgprice = Integer.parseInt(plist.get(i).getAvgprice());//평균단가
+            double avgprice = Double.parseDouble(plist.get(i).getAvgprice());//평균단가
 
             //getStock()메서드를 이용해서 detail key값을 가져와서 지정함.
             JSONObject object = StockInfo.getStock(num);
@@ -68,8 +68,8 @@ public class PortfolioController {
         //수익, 수익률 계산하는 부분
 
             //손익
-            Long profitAndLoss;
-            profitAndLoss = Long.valueOf((cprice- avgprice))*quantity;
+            double profitAndLoss;
+            profitAndLoss = Double.valueOf((cprice- avgprice))*quantity;
 
             //수익률 = (현재주식가격 - 구매가격)/구매가격*100
             double earningsrate;
