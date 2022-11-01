@@ -137,10 +137,10 @@ public class BoardController {
 
     //게시물 삭제
     @GetMapping("board_del") //board_del 매핑주소 등록, get으로 접근하는 매핑주소를 처리
-    public ModelAndView board_del(int bno,int page,RedirectAttributes rttr) {
+    public ModelAndView board_del(int nno,int page,RedirectAttributes rttr) {
         //int bno,int page하면 피라미터네임 bno,page로 전달된 번호값과 쪽번호를 가져온다.
 
-        boardService.deleteBoard(bno);//게시물 삭제
+        boardService.deleteBoard(nno);//게시물 삭제
         /* 문제)번호를 기준으로 삭제되게 서비스,모델 DAOImpl,mybatis 매퍼태그까지 선순환 구조를 완성해 본다.더불어 개발자 테스트(디버깅)까지
          * 해본다.
          */
@@ -148,7 +148,7 @@ public class BoardController {
         rttr.addFlashAttribute("msg","SUCCESS");
 
         ModelAndView dm=new ModelAndView();
-        dm.setViewName("redirect:/board/board_list?page="+page);
+        dm.setViewName("redirect:/news/news?page="+page);
         return dm;//  /board/board_list?page=쪽번호 가 get으로 전달
     }//board_del()
 }
