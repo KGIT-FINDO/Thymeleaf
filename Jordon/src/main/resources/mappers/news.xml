@@ -33,4 +33,17 @@
         delete from news where nno=#{nno}
     </delete>
 
+    <insert id="insertFiles">
+        insert into uploadfile (fid, nno ,fileoriginname, uuidname) values (uploadfile_seq.nextval, (SELECT
+                                                                                                         LAST_NUMBER
+                                                                                                     FROM
+                                                                                                         USER_SEQUENCES
+                                                                                                     WHERE
+                                                                                                         SEQUENCE_NAME = 'NEWS_SEQ')-1 ,#{fileoriginname}, #{uuidname})
+    </insert>
+
+    <select id="getFiles" resultType="com.project.jordon.vo.NewsVO">
+        select * from uploadfile where nno=#{nno}-1
+    </select>
+
 </mapper>

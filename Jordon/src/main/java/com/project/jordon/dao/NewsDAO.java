@@ -19,4 +19,8 @@ public interface NewsDAO {
     void updateBoard(NewsVO eb);
 
     void deleteNews(int nno);
+
+    List<NewsVO> getNewsFileByNno(int nno);
+
+    void insertFile(NewsVO nvo);
 }

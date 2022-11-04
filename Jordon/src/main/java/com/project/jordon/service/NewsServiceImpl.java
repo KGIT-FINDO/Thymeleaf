@@ -25,7 +25,9 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
+    @Transactional
     public void insertNews(NewsVO nvo) {
+        newsDAO.insertFile(nvo);
         newsDAO.insertNews(nvo);
     }
 
@@ -50,4 +52,11 @@ public class NewsServiceImpl implements NewsService{
     public void deleteNews(int nno) {
         this.newsDAO.deleteNews(nno);
     }
+
+    @Override
+    public List<NewsVO> getNewsFilesByNno(int nno) {
+        return this.newsDAO.getNewsFileByNno(nno);
+    }
+
+
 }

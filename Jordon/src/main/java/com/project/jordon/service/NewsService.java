@@ -19,4 +19,7 @@ public interface NewsService {
     void updateBoard(NewsVO eb);
 
     void deleteNews(int nno);
+
+    List<NewsVO> getNewsFilesByNno(int nno);
+
 }

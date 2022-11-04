@@ -15,6 +15,15 @@
         <tr>
           <th>제목</th>
           <td><span th:text="${b.ntitle}"></span></td>
+          <th>분석자료</th>
+
+            <td th:each="file : ${NfileL}">
+              <a th:href="@{/news/download(uuidname=${file.uuidname})}">
+                <span th:text="${file.fileoriginname}"></span>
+              </a>
+            </td>
+
+
           <th rowspan="2">조회수</th>
           <td rowspan="2" align="center"><span th:text="${b.nviewcnt}"></span></td>
         </tr>

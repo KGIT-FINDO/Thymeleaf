@@ -10,6 +10,8 @@ public class NewsVO {
     private String ncontent;
     private int nviewcnt; // 조회수
     private String nregdate;
+    private String fileoriginname;
+    private String uuidname;
 
     private int startrow; // 시작번호
     private int endrow; // 끝번호

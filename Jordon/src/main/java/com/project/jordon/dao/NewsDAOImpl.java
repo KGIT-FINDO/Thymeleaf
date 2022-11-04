@@ -48,4 +48,14 @@ public class NewsDAOImpl implements NewsDAO{
     public void deleteNews(int nno) {
         sqlSession.delete("delNews", nno);
     }
+
+    @Override
+    public List<NewsVO> getNewsFileByNno(int nno) {
+        return sqlSession.selectList("getFiles", nno);
+    }
+
+    @Override
+    public void insertFile(NewsVO nvo) {
+        sqlSession.insert("insertFiles", nvo);
+    }
 }
