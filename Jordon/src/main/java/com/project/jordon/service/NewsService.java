@@ -22,4 +22,7 @@ public interface NewsService {
 
     List<NewsVO> getNewsFilesByNno(int nno);
 
+    void insertFile(NewsVO nvo);
+
+    Object getOriginName(String uuidname);
 }

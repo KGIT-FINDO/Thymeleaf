@@ -12,20 +12,20 @@
         <tr>
           <th colspan="4">내용보기</th>
         </tr>
+
         <tr>
           <th>제목</th>
           <td><span th:text="${b.ntitle}"></span></td>
-          <th>분석자료</th>
-
-            <td th:each="file : ${NfileL}">
-              <a th:href="@{/news/download(uuidname=${file.uuidname})}">
-                <span th:text="${file.fileoriginname}"></span>
-              </a>
-            </td>
-
-
           <th rowspan="2">조회수</th>
           <td rowspan="2" align="center"><span th:text="${b.nviewcnt}"></span></td>
+        </tr>
+        <tr>
+          <th>자료</th>
+          <td >
+            <a th:each="file : ${NfileL}" th:href="@{/news/download(uuidname=${file.uuidname},nno=${file.nno})}" style="text-decoration: none">
+              <span th:text="${file.fileoriginname}" ></span></br>
+            </a>
+          </td>
         </tr>
         <tr>
           <th>내용</th>

@@ -20,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -108,6 +110,7 @@ public class NewsController {
                 System.out.println("NewFileName"+NewFileName);
                 nvo.setFileoriginname(OriginfileName);
                 nvo.setUuidname(NewFileName);
+                this.newsService.insertFile(nvo);
 
                 try{
                     multipartFile.transferTo(saveFile);// uploads 폴더에 업로드 되는 원본 파일명으로 실제 업로드
@@ -148,20 +151,29 @@ public class NewsController {
         return cm;
     }
     @RequestMapping("download")
-    public ResponseEntity<Object> down_cont(@RequestParam("uuidname") String uuidname) throws MalformedURLException {
+    public ResponseEntity<Object> down_cont(@RequestParam("uuidname") String uuidname, HttpServletResponse response) throws MalformedURLException {
+        response.setContentType("text/html;Charset=UTF-8");
         String path = "/Users/jeongchan-ug/Documents/Thymeleaf/Jordon/upload/";
         //System.out.println("nno:"+nno);
         System.out.println("uuidname:"+uuidname);
+
+
 
         try {
             Path filePath = Paths.get(path+uuidname);
             Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
 
-            File file = new File(path);
+            File file = new File(path);//해당경로에 있는 파일을 찾음
+            String originName = (String) this.newsService.getOriginName(uuidname);
+            System.out.println("originName"+originName);
+            String encodedFilename = URLEncoder.encode(originName, "UTF-8").replaceAll("\\+", "%20"); //한글 파일을 utf-8로 인코딩 하고 띄워쓰기를 '+'f로 나오는걸 공백으로 나오게 함.
+
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(encodedFilename).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 
+
+            System.out.println("builder:"+file.getName());
             return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);

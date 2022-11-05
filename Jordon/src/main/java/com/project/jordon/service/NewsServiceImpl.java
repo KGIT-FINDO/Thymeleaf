@@ -25,9 +25,8 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    @Transactional
     public void insertNews(NewsVO nvo) {
-        newsDAO.insertFile(nvo);
+
         newsDAO.insertNews(nvo);
     }
 
@@ -56,6 +55,16 @@ public class NewsServiceImpl implements NewsService{
     @Override
     public List<NewsVO> getNewsFilesByNno(int nno) {
         return this.newsDAO.getNewsFileByNno(nno);
+    }
+
+    @Override
+    public void insertFile(NewsVO nvo) {
+        newsDAO.insertFile(nvo);
+    }
+
+    @Override
+    public Object getOriginName(String uuidname) {
+        return this.newsDAO.getOriginName(uuidname);
     }
 
 

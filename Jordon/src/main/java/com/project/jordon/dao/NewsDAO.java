@@ -23,4 +23,6 @@ public interface NewsDAO {
     List<NewsVO> getNewsFileByNno(int nno);
 
     void insertFile(NewsVO nvo);
+
+    Object getOriginName(String uuidname);
 }

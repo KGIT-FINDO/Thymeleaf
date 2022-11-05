@@ -58,4 +58,9 @@ public class NewsDAOImpl implements NewsDAO{
     public void insertFile(NewsVO nvo) {
         sqlSession.insert("insertFiles", nvo);
     }
+
+    @Override
+    public Object getOriginName(String uuidname) {
+        return sqlSession.selectOne("getOriginName", uuidname);
+    }
 }
