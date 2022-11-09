@@ -1,8 +1,8 @@
 package com.project.jordon.dao;
 
-import com.project.jordon.vo.ReplyVO;
-
 import java.util.List;
+
+import com.project.jordon.vo.ReplyVO;
 
 public interface ReplyDAO {
 

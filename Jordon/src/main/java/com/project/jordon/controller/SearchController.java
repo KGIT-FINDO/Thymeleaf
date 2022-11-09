@@ -24,14 +24,14 @@ public class SearchController {
     SearchService searchService;
 
     @RequestMapping("/search_list")
-    String index_search_ok(Model listM, HttpSession session, HttpServletResponse response, HttpServletRequest request, SearchVO svo) {
+    String index_search_ok(Model listM, HttpServletRequest request, SearchVO svo) {
 
         String find_name = request.getParameter("find_name");
         svo.setFind_name("%"+find_name+"%");
 
         System.out.println(find_name);
         List<SearchVO> slist = this.searchService.getSearchList(svo);
-        int slist_check = slist.size();
+        int slist_check = slist.size(); // 검색된 종목 숫자.
         listM.addAttribute("slist_check", slist_check);
         listM.addAttribute("slist", slist);
         listM.addAttribute("find_name", find_name);

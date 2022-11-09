@@ -1,8 +1,8 @@
 package com.project.jordon.service;
 
-import com.project.jordon.vo.ReplyVO;
-
 import java.util.List;
+
+import com.project.jordon.vo.ReplyVO;
 
 public interface ReplyService {
 

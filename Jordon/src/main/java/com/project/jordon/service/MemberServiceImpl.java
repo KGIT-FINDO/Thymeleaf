@@ -5,6 +5,8 @@ import com.project.jordon.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MemberServiceImpl implements MemberService{
     //     Autowired from DAO
@@ -40,6 +42,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public int deleteMember(MemberVO m) {
         return this.memberDAO.deleteMember(m);
+    }
+
+    @Override
+    public int idcheck(String memberid) {
+        return this.memberDAO.idcheck(memberid);
     }
 
 }

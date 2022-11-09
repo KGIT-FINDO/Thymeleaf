@@ -2,6 +2,8 @@ package com.project.jordon.service;
 
 import com.project.jordon.vo.MemberVO;
 
+import java.util.List;
+
 public interface MemberService {
     //     Bring method from DAO
     // 회원가입
@@ -21,5 +23,7 @@ public interface MemberService {
 
     // 회원 탈퇴
     int deleteMember(MemberVO m);
+
+    int idcheck(String memberid);
 
 }

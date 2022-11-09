@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+/upload/
+
+### pdf, photo files###
+*.pdf
+*.png
+*.gif
+*.jpg

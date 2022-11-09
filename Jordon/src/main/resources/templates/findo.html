@@ -36,8 +36,8 @@
                                 <hr>
                                 <a th:href="@{/profile}"><p>Profile</p></a>
                                 <hr>
-                                <a th:href="@{/event}"><p>Event</p></a>
-                                <hr>
+                                <!--                                <a th:href="@{/event}"><p>Event</p></a>-->
+                                <!--                                <hr>-->
                                 <a th:href="@{/gamezone}"><p>GameZone</p></a>
                                 <hr>
                                 <a th:href="@{/board/board_list}"><p>Announcement</p></a>
@@ -69,7 +69,7 @@
                 <button><a th:href="@{/findo}">홈</a></button>
                 <button><a th:href="@{/portfolio}">포트폴리오</a></button>
                 <button><a th:href="@{/community}">커뮤니티</a></button>
-                <button><a th:href="@{/news}">뉴스</a></button>
+                <button><a th:href="@{/news/news}">뉴스</a></button>
             </div>
             <div class="findo_head_login">
                 <hr>
@@ -79,6 +79,68 @@
                 </div>
                 <div class="findo_head_login_text" th:unless="${session.session == null}">
                     <p th:text="${session.session}+'님 반갑습니다.'"></p>
+                    <hr>
+                    <h4 th:text="'현재 자산현황'"></h4>
+                    <div class="findo_head_login_text_h5">
+                        <p>*사용자 증권사별 수수료의 차이로 실제 수익률과 상의할 수 있습니다.*</p>
+                    </div>
+                    <hr>
+                    <div class="portfolio_stock">
+                        <div th:if="${klist != null}" th:each="k : ${klist}">
+                            <table border="1">
+                                <tr>
+                                    <th rowspan="4" class="select_edit" th:value="a" style="display: none; width:10%;">선택<input
+                                            type="checkbox"
+                                            name="checkedValue"
+                                            class="select_edit" th:value="${k.id}"></label></th>
+                                    <th style="width:20%;">종목코드</th>
+                                    <th style="width:35%;">종목명</th>
+                                    <th style="width:15%;">보유수량</th>
+                                    <th style="width:20%;">평균단가</th>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="width:20%;">
+                                        <span th:text="${k.id}"></span>
+                                    </td>
+
+                                    <td style="text-align: center; width:35%;">
+                                        <a th:href="@{/port_cont(portfolionumber=${k.id})}"
+                                           style="text-decoration: none; color:black;">
+                                            <span th:text="${k.name}"></span>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center; width:15%;">
+                                        <span th:text="${k.quantity}"></span>
+                                    </td>
+                                    <td rowspan="3" style="text-align: center; width:20%;">
+                                        <span th:text="${k.avgprice}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width:20%;">현재가</th>
+                                    <th style="width:35%;">손익</th>
+                                    <th style="width:15%;">수익률</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; width:20%;">
+                                        <span th:text="${k.currentPrice}"></span>
+                                    </td>
+                                    <td style="text-align: center; width:35%;">
+                                        <span th:text="${k.profitAndLoss}"></span>
+                                    </td>
+                                    <td style="text-align: center; width:15%;">
+                                        <span th:text="${k.eprice}"></span>
+                                    </td>
+                                </tr>
+                                <br>
+                                <div th:if="${klist == null}">
+                                    <tr>
+                                        <th colspan="5">보유중인 종목이 없습니다.</th>
+                                    </tr>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header><!-- header -->
@@ -88,7 +150,7 @@
                 <a th:href="@{/company}"><img src="/images/chart5.jpg"></a>
             </div>
             <div class="main_top_middle">
-                <h2>FINDO's Invesment Steragies With Global Chain</h2>
+                <h2>FINDO's Invesment Strategies With Global Chain</h2>
                 <a th:href="@{/investment}"><img src="/images/management.jpg"></a>
             </div>
             <div class="main_top_bottom">
@@ -97,7 +159,7 @@
             </div> <!-- main_top -->
 
             <div class="main_middle_top">
-                <h2>Get The world Fastest News In Findo</h2>
+                <h2>Get The World Fastest News In Findo</h2>
                 <a th:href="@{/management}"><img src="/images/newspaper.jpg"></a>
             </div>
             <div class="main_middle_middle">
@@ -106,20 +168,20 @@
             </div>
             <div class="main_middle_bottom">
                 <h2>Share Information Community With Shareholders</h2>
-                <a th:href="@{/community}"><img src="/images/career2.jpg"></a>
+                <a th:href="@{/announcement/board_list}"><img src="/images/career2.jpg"></a>
             </div> <!-- main_middel -->
 
             <div class="main_bottom_top">
-                <h2>Show Me The Your Portfolio</h2>
-                <a th:href="@{/community}"><img src="/images/career3.jpg"></a>
+                <h2>Show Me Your Portfolio</h2>
+                <a th:href="@{/products}"><img src="/images/career3.jpg"></a>
             </div>
             <div class="main_bottom_middle">
                 <h2>Profit Rankers In Findo</h2>
-                <a th:href="@{/community}"><img src="/images/career4.jpg"></a>
+                <a th:href="@{/news/news}"><img src="/images/career4.jpg"></a>
             </div>
             <div class="main_bottom_bottom">
                 <h2>Honoring The Contributors</h2>
-                <a th:href="@{/community}"><img src="/images/employee.png"></a>
+                <a th:href="@{/company}"><img src="/images/employee.png"></a>
             </div> <!-- main_bottom -->
         </div> <!-- findo_main -->
         <!-- footer -->
@@ -136,7 +198,7 @@
                 </div>
                 <div class="footer_top_list">
                     <li><a th:href="@{/management}">Management</a></li>
-                    <li><a th:href="@{/FAQ}">FAQ</a></li>
+                    <li><a th:href="@{/faq/board_list}">FAQ</a></li>
                 </div>
             </div> <!-- footer_top-->
             <hr>
@@ -151,7 +213,7 @@
                 </div>
                 <div class="footer_bottom_top_list">
                     <li><a th:href="@{/personal_info_law}">개인정보처리방침</a></li>
-                    <li><a th:href="@{/management_announcement}">경영공지</a></li>
+                    <li><a th:href="@{/announcement/board_list}">경영공지</a></li>
                 </div>
             </div> <!-- footer_bottom-->
             <hr>

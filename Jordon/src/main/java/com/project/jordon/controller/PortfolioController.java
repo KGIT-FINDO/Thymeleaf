@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,7 +54,7 @@ public class PortfolioController {
             String num = plist.get(i).getPortfolionumber();//종목코드
             int quantity =  Integer.parseInt(plist.get(i).getPortfolioquantity());//보유수량
             int tprice = Integer.parseInt(plist.get(i).getTransactionprice());//매수금액
-            int avgprice = Integer.parseInt(plist.get(i).getAvgprice());//평균단가
+            double avgprice = Double.parseDouble(plist.get(i).getAvgprice());//평균단가
 
             //getStock()메서드를 이용해서 detail key값을 가져와서 지정함.
             JSONObject object = StockInfo.getStock(num);
@@ -68,8 +69,8 @@ public class PortfolioController {
         //수익, 수익률 계산하는 부분
 
             //손익
-            Long profitAndLoss;
-            profitAndLoss = Long.valueOf((cprice- avgprice))*quantity;
+            double profitAndLoss;
+            profitAndLoss = Double.valueOf((cprice- avgprice))*quantity;
 
             //수익률 = (현재주식가격 - 구매가격)/구매가격*100
             double earningsrate;
@@ -142,31 +143,47 @@ public class PortfolioController {
 
     }
     @RequestMapping("port_add")
-    public String addPortfolio(PortfolioVO pvo, HttpSession session){
+    public String addPortfolio(PortfolioVO pvo, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         String userID = (String) session.getAttribute("session");
+        System.out.println("파라미터"+request.getParameter("stock_number"));
+        PrintWriter out = response.getWriter();
         pvo.setMemberid(userID);
-        PortfolioVO isStockExist = this.portfolioService.checkPortfolio(pvo);
-        if(isStockExist == null){
-            this.portfolioService.addPortfolio(pvo);
+
+
+        if( request.getParameter("stock_number") == null ){
+            System.out.println("널인건 확실함");
+            out.println("<script>");
+            out.println("alert('비밀번호가 다릅니다');");
+            out.println("history.go(-1);");
+            out.println("</script>");
+            out.flush();
         }else{
-            //이미 내 포트폴리오에 해당 종목이 있는경우 평단가를 수정해야 함.
-            //수정된 평단가와 수량을 db에 저장함.
-            // 금액표시칸에는 맨 끝에 원화 기호 넣게 하고 금액은 오른쪽 정렬, 숫자 중간에 ' , '표시 넣어줄것.
-            int price = pvo.getPrice();//입력받은 구매가격
-            int quantity = pvo.getQuantity();//입력받은 구매수량
+            PortfolioVO isStockExist = this.portfolioService.checkPortfolio(pvo);
+            if(isStockExist == null){
+                this.portfolioService.addPortfolio(pvo);
+            }else{
+                //이미 내 포트폴리오에 해당 종목이 있는경우 평단가를 수정해야 함.
+                //수정된 평단가와 수량을 db에 저장함.
+                // 금액표시칸에는 맨 끝에 원화 기호 넣게 하고 금액은 오른쪽 정렬, 숫자 중간에 ' , '표시 넣어줄것.
+                int price = pvo.getPrice();//입력받은 구매가격
+                int quantity = pvo.getQuantity();//입력받은 구매수량
 
-            int avgPFromDb = Integer.parseInt(isStockExist.getAvgprice());//db에 저장된 평균단가.
-            int quantityFromDb = Integer.parseInt(isStockExist.getPortfolioquantity());//db에 저장된 보유수
+                int avgPFromDb = Integer.parseInt(isStockExist.getAvgprice());//db에 저장된 평균단가.
+                int quantityFromDb = Integer.parseInt(isStockExist.getPortfolioquantity());//db에 저장된 보유수
 
-            int editQ = quantity+quantityFromDb;//수정된 수량
-            double editAVG = (double)((price*quantity)+(avgPFromDb*quantityFromDb))/editQ;
+                int editQ = quantity+quantityFromDb;//수정된 수량
+                double editAVG = (double)((price*quantity)+(avgPFromDb*quantityFromDb))/editQ;
 
-            pvo.setQuantity(editQ);
-            pvo.setAvgprice(String.valueOf(editAVG));
 
-            this.portfolioService.editAvgPrice(pvo);
+                pvo.setQuantity(editQ);
+                pvo.setAvgprice(String.valueOf(editAVG));
+
+                this.portfolioService.editAvgPrice(pvo);
+
+            }
 
         }
+
         return "redirect:http://localhost:7777/portfolio";
     }
     @RequestMapping("port_del")
