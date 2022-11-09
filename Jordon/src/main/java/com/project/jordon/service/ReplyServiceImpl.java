@@ -1,13 +1,14 @@
 package com.project.jordon.service;
 
-import com.project.jordon.dao.BoardDAO;
-import com.project.jordon.dao.ReplyDAO;
-import com.project.jordon.vo.ReplyVO;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.project.jordon.dao.BoardDAO;
+import com.project.jordon.dao.ReplyDAO;
+import com.project.jordon.vo.ReplyVO;
 
 @Service //@Service 애노테이션을 추가함으로써 스프링에 서비스라는 것을 인식하게 한다.
 public class ReplyServiceImpl implements ReplyService {

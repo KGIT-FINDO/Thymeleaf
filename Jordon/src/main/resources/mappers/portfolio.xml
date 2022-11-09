@@ -6,8 +6,7 @@
 
 <mapper namespace="portfolio">
     <select id="portfolioList" parameterType="p" resultType="com.project.jordon.vo.PortfolioVO">
-        select * from portfolio where memberid=#{memberid} and status='1'
-    </select>
+        select * from portfolio where memberid=#{memberid} and status='1'</select>
     <select id="portSearchList" resultType="com.project.jordon.vo.SearchVO">
         select * from kospi where stockname like #{find_name} or stocknumber like #{find_name}
     </select>

@@ -1,11 +1,12 @@
 package com.project.jordon.dao;
 
-import com.project.jordon.vo.ReplyVO;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.project.jordon.vo.ReplyVO;
 
 @Repository //@Repository 애노테이션을 추가함 으로써 스프링에 모델 DAO라는 것을 인식하게 한다.
 public class ReplyDAOImpl implements ReplyDAO {

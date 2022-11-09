@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,23 +18,6 @@ public class MemberController {
     @Autowired
     private MemberService memberserivce;
 
-    @RequestMapping("/signup_form")
-    public String findo_signup_form() {
-        return "findo_signup_form";
-    }
-
-
-    @RequestMapping("/findo_signup_form_ok")
-    public String findo_signup_form_ok(MemberVO m) {
-        if (m.getMemberid() != null && m.getMemberpassword() != null && m.getMemberpassword2() != null && m.getMembername() != null && m.getMemberbirth() != null && m.getMembergender() != null && m.getMemberemail() != null && m.getMemberemailauth() != null && m.getMemberaddress1() != null && m.getMemberaddress2() != null && m.getMemberaddress3() != null && m.getMemberaddress4() != null && m.getMemberphonenumber() != null) {
-            this.memberserivce.insertMember(m);
-            System.out.println("저장됨");
-            return "findo_signup_completement";
-        } else {
-            System.out.println("저장안됨");
-            return "findo_signup_form";
-        }
-    }
 
     @RequestMapping("/login")
     public String findo_login() {
@@ -43,9 +28,9 @@ public class MemberController {
     public String findo_login_ok(String memberid, String memberpassword, HttpServletRequest request) {
 
         MemberVO m = this.memberserivce.loginMember(memberid);
-        if(m == null) {
+        if (m == null) {
             return "findo_login";
-        }else if (m.getMemberid().equals(memberid) && m.getMemberpassword().equals(memberpassword)) {
+        } else if (m.getMemberid().equals(memberid) && m.getMemberpassword().equals(memberpassword)) {
             System.out.println("아이디 비밀번호 둘다 같음");
             String membername1 = m.getMembername();
             System.out.println(membername1);
@@ -58,6 +43,7 @@ public class MemberController {
             session.setAttribute("memberbirth", m.getMemberbirth());
             session.setAttribute("membergender", m.getMembergender());
             session.setAttribute("memberemail", m.getMemberemail());
+            session.setAttribute("memberemailauth", m.getMemberemailauth());
             session.setAttribute("memberaddress1", m.getMemberaddress1());
             session.setAttribute("memberaddress2", m.getMemberaddress2());
             session.setAttribute("memberaddress3", m.getMemberaddress3());
@@ -78,6 +64,7 @@ public class MemberController {
             System.out.println("아이디 비밀번호 틀림");
             return "redirect:/login";
         }
+
     }
 
     @RequestMapping("/logout")
@@ -185,4 +172,28 @@ public class MemberController {
         }
     }
 
+    @RequestMapping(value = "/signup_form", method = {RequestMethod.GET})
+    @ResponseBody
+    public int idcheck(String memberid) {
+        int result = memberserivce.idcheck(memberid);
+        return result;
+    }
+
+    @RequestMapping(value = "/signup_form", method = {RequestMethod.POST})
+    public String findo_signup_form() {
+        return "findo_signup_form";
+    }
+
+
+    @RequestMapping("/findo_signup_form_ok")
+    public String findo_signup_form_ok(MemberVO m) {
+        if (m.getMemberid() != null && m.getMemberpassword() != null && m.getMemberpassword2() != null && m.getMembername() != null && m.getMemberbirth() != null && m.getMembergender() != null && m.getMemberemail() != null && m.getMemberemailauth() != null && m.getMemberaddress1() != null && m.getMemberaddress2() != null && m.getMemberaddress3() != null && m.getMemberaddress4() != null && m.getMemberphonenumber() != null) {
+            this.memberserivce.insertMember(m);
+            System.out.println("저장됨");
+            return "findo_signup_completement";
+        } else {
+            System.out.println("저장안됨");
+            return "findo_signup_form";
+        }
+    }
 }

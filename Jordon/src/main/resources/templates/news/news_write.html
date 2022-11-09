@@ -10,35 +10,35 @@
             <div class="news_write">
                 <table board="1">
                     <tr>
-                        <th colspan="2">Announcement Board</th>
+                        <th colspan="2"><h2>FINDO NEWS</h2></th>
                     </tr>
                     <tr align="left">
-                        <th>글쓴이</th>
+                        <th><h2>글쓴이</h2></th>
                     </tr>
                     <tr>
                         <td><input name="nwriter" id="nwriter" size="14" th:value="${session.session}" readonly></td>
                     </tr>
                     <tr align="left">
-                        <th>글제목</th>
+                        <th><h2>글제목</h2></th>
                     </tr>
                     <tr>
                         <td><input name="ntitle" id="ntitle" size="14" spellcheck="false"></td>
                     </tr>
                     <tr>
-                        <td>레포트 업로드</td>
+                        <td><h2>업로드 파일</h2></td>
                     </tr>
                     <tr>
-                        <td><input type="file" multiple="multiple" name="uploadFile"></td>
+                        <td><input class="fileuploadbutton" type="file" multiple="multiple" name="uploadFile"></td>
                     </tr>
                     <tr align="left">
-                        <th>글내용</th>
+                        <th><h2>글내용</h2></th>
                     </tr>
                     <tr>
-                        <td><textarea name="ncontent" id="ncontent" rows="20" cols="72" style="resize:none;" spellcheck="false"></textarea></td>
+                        <td><textarea class="ncontent" name="ncontent" id="ncontent" rows="20" cols="48" style="resize:none;" spellcheck="false"></textarea></td>
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="right">
+                        <th colspan="2" align="right" class="fileuploadbtn">
                             <input type="submit" value="글쓰기" />
                             <input type="reset" value="취소" />
                             <input type="button" value="목록" th:onclick="|location.href='@{/news/news(page=${page})}'|" />

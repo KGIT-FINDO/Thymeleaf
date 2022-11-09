@@ -10,7 +10,7 @@
             <div class="board_table">
                 <table border="1">
                     <tr>
-                        <td colspan="5" align="right"><span th:text="'총 게시물 수 : '+${totalCount}+'개'"></span></td>
+                        <td colspan="5" align="right"><span th:text="'뉴스 토픽 : '+${totalCount}+'개'"></span></td>
                     </tr>
                     <tr>
                         <th>번호</th>
@@ -55,7 +55,7 @@
 
                     <tr>
                         <td colspan="5" align="right">
-                            <input th:if="${session.session != null}" type="button" value="글쓰기" th:onclick="|location.href='@{/news/news_write(page=${page})}'|" />
+                            <input th:if="${session.session} != null and ${session.memberemailauth} == 2" type="button" value="글쓰기" th:onclick="|location.href='@{/news/news_write(page=${page})}'|" />
                         </td>
                     </tr>
 
