@@ -37,7 +37,7 @@ public class PortfolioController {
         response.setContentType("text/html;Charset=UTF-8");
         String id = (String) session.getAttribute("session");
         PrintWriter out = response.getWriter();
-        if(session == null) {
+        if(id == null) {
             return "findo";
         }else {
 //            System.out.println("login은 가능함.");
@@ -168,7 +168,7 @@ public class PortfolioController {
                 int price = pvo.getPrice();//입력받은 구매가격
                 int quantity = pvo.getQuantity();//입력받은 구매수량
 
-                int avgPFromDb = Integer.parseInt(isStockExist.getAvgprice());//db에 저장된 평균단가.
+                Double avgPFromDb = Double.parseDouble(isStockExist.getAvgprice());//db에 저장된 평균단가.
                 int quantityFromDb = Integer.parseInt(isStockExist.getPortfolioquantity());//db에 저장된 보유수
 
                 int editQ = quantity+quantityFromDb;//수정된 수량
