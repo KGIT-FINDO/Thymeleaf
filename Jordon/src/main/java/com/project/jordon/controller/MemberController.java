@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @Controller
 public class MemberController {
@@ -25,11 +28,19 @@ public class MemberController {
     }
 
     @RequestMapping("/findo_login_ok")
-    public String findo_login_ok(String memberid, String memberpassword, HttpServletRequest request) {
+    public String findo_login_ok(String memberid, String memberpassword, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;Charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
         MemberVO m = this.memberserivce.loginMember(memberid);
         if (m == null) {
-            return "findo_login";
+            System.out.println("정보가 없는 회원입니다.");
+            out.println("<script>");
+            out.println("alert('정보가 없는 회원입니다.');");
+            out.println("history.go(-1);");
+            out.println("</script>");
+            out.flush();
+            return "redirect:/login";
         } else if (m.getMemberid().equals(memberid) && m.getMemberpassword().equals(memberpassword)) {
             System.out.println("아이디 비밀번호 둘다 같음");
             String membername1 = m.getMembername();
@@ -53,15 +64,29 @@ public class MemberController {
             session.setAttribute("memberregdate", m.getMemberregdate());
             session.setAttribute("memberupdate", m.getMemberupdate());
 
+
             if (m.getMemberid().equals(memberid) == false || m.getMemberpassword().equals(memberpassword) == false) {
                 System.out.println("쓰레기 값이 들어옴");
+                out.println("<script>");
+                out.println("alert('허용되지 않는 값입니다.');");
+                out.println("history.go(-1);");
+                out.println("</script>");
+                out.flush();
                 return "redirect:/login";
-            } else {
+            }
+            else {
                 System.out.println("정상적인 데이터가 들어옴");
+
             }
             return "redirect:/findo";
         } else {
             System.out.println("아이디 비밀번호 틀림");
+            System.out.println("아이디나 비밀번호가 틀렸습니다.");
+            out.println("<script>");
+            out.println("alert('비밀번호가 다릅니다');");
+            out.println("history.go(-1);");
+            out.println("</script>");
+            out.flush();
             return "redirect:/login";
         }
 
